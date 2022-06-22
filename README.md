@@ -2,7 +2,7 @@
 
 ## 1. LTP进行中文分词
 
-LTP 4（Language Technology Platform） 提供了一系列中文自然语言处理工具，用户可以使用这些工具对于中文文本进行分词、词性标注、句法分析等等工作。
+[LTP 4](https://ltp.ai/index.html) --（Language Technology Platform） 提供了一系列中文自然语言处理工具，用户可以使用这些工具对于中文文本进行分词、词性标注、句法分析等等工作。
 
 > @article{che2020n,
   title={N-LTP: A Open-source Neural Chinese Language Technology Platform with Pretrained Models},
@@ -34,6 +34,10 @@ sdp = ltp.sdp(hidden)
 ~~~
 
 ## 2. Jieba结巴中文分词
+
+[结巴分词](https://github.com/fxsjy/jieba)目前使用比较广泛，是一个不错的学习NLP的理想Python软件包。
+
+[jieba-Chinese Words Segmentation Utilities](https://github.com/fxsjy/jieba)
 
 分词是NLP处理的第一步，也是最基本的任务，分词的好坏直接决定了后面语义分析的精准度。
 
@@ -249,7 +253,9 @@ TF-IDF的原理如下：
 
 ### 2.4 词性标注
 
-词性标注主要是标记文本分词后每个词的词性，采用和 `ictclas` 兼容的标记法.
+词性标注(Part-of-speech Tagging, POS)主要是标记文本分词后每个词的词性，采用和 `ictclas` 兼容的标记法. 这里的词性类别可能是名词、动词、形容词或其他。 下面的句子是一个词性标注的例子。 其中，v代表动词、n代表名词、c代表连词、d代表副词、wp代表标点符号。 
+
+![中文词性标注](img/jieba-1.png)
 
 - ictclas：汉语词法分析系统 ICTCLAS(Institute of Computing Technology, Chinese Lexical Analysis System)
 
@@ -631,6 +637,11 @@ results = searcher.search(myquery)
 
 以上就是 whoosh 做搜索的基本步骤。
 
+### 2.11 jieba 中文分词组件中的HMM模型和Viterbi算法应用
+
+![jieba 中文分词组件中的HMM模型和Viterbi算法应用](img/jieba-2.jpeg)
+
+[jieba实践介绍](https://www.freesion.com/article/5421329003/)
 ## 3. [PaddlePaddle GitHub](https://pypi.org/project/paddlepaddle/)
 
 PaddlePaddle, as the only independent R&D deep learning platform in China, has been officially open-sourced to professional communities since 2016. It is an industrial platform with advanced technologies and rich features that cover core deep learning frameworks, basic model libraries, end-to-end development kits, tools & components as well as service platforms. PaddlePaddle is originated from industrial practices with dedication and commitments to industrialization. It has been widely adopted by a wide range of sectors including manufacturing, agriculture, enterprise service, and so on while serving more than 2.3 million developers. With such advantages, PaddlePaddle has helped an increasing number of partners commercialize AI.
