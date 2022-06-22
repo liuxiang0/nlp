@@ -1,0 +1,24 @@
+>>> import jieba
+
+>>> dir(jieba)
+['DEFAULT_DICT', 'DEFAULT_DICT_NAME', 'DICT_WRITING', 'PY2', 'Tokenizer', '__builtins__', '__cached__', '__doc__', '__file__', '__license__', '__loader__', '__name__', '__package__', '__path__', '__spec__', '__version__', '_compat', '_get_abs_path', '_lcut', '_lcut_all', '_lcut_for_search', '_lcut_for_search_no_hmm', '_lcut_no_hmm', '_pcut', '_pcut_for_search', '_replace_file', 
+
+'absolute_import', 
+'add_word', 'del_word', 'load_userdict','dt', 'get_dict_file', 
+'calc', 
+'check_paddle_install', 
+'cut', 'lcut', 
+'cut_for_search', 'lcut_for_search' , 
+'default_encoding', 
+'default_logger', 
+'disable_parallel', 
+'enable_paddle', 
+'enable_parallel', 
+'finalseg', 
+'get_DAG', 
+'get_FREQ', 
+'get_module_res', 
+'initialize', 
+'iteritems', 
+'iterkeys', 
+'itervalues', 'log', 'log_console', 'logging', 'marshal', 'md5', 'os', 'pkg_resources', 'pool', 're', 're_eng', 're_han_default', 're_skip_default', 're_userdict', 'resolve_filename', 'setLogLevel', 'set_dictionary', 'strdecode', 'string_types', 'suggest_freq', 'sys', 'tempfile', 'text_type', 'threading', 'time', 'tokenize', 'unicode_literals', 'user_word_tag_tab', 'xrange']
