@@ -39,6 +39,8 @@ sdp = ltp.sdp(hidden)
 
 [jieba-Chinese Words Segmentation Utilities](https://github.com/fxsjy/jieba)
 
+[jieba thesaurus in Python -- English introduction](https://ofstack.com/python/46390/jieba-thesaurus-in-python.html)
+
 分词是NLP处理的第一步，也是最基本的任务，分词的好坏直接决定了后面语义分析的精准度。
 
 所谓分词就是将一段表述里的词汇进行分解。  
@@ -155,7 +157,18 @@ Search Mode: 中国, 上海, 是, 一座, 美丽, 的, 国际, 国际性, 大都
 
 `cut` 和 `cut_for_search` 方法都是**支持繁体字**的。
 
-### 2.2 添加自定义词典
+### 2.2 添加自定义词典(自定义语料库)
+
+关键词提取所使用逆向文件频率（IDF）文本语料库和停止词（Stop Words）文本语料库可以切换成自定义语料库的路径。
+
+~~~python
+jieba.analyse.set_stop_words("stop_words.txt")
+jieba.analyse.set_idf_path("idf.txt.big")
+
+for x, w in anls.extract_tags(strs, topK=20, withWeight=True):
+    print('word:{0} \t IDF:{1}'.format(x, w))
+
+~~~
 
 如果是对专业新闻或者小说进行分词，会有很多的新词汇，jieba库里没有就没办法识别，那么就需要添加自定义的词汇，比如：奥利给。
 
@@ -253,6 +266,8 @@ TF-IDF的原理如下：
 
 ### 2.4 词性标注
 
+`jieba.posseg.POSTokenizer(tokenizer=None)` 新建自定义分词器，`tokenizer` 参数可指定内部使用的 `jieba.Tokenizer` 分词器。`jieba.posseg.dt` 为默认词性标注分词器。
+
 词性标注(Part-of-speech Tagging, POS)主要是标记文本分词后每个词的词性，采用和 `ictclas` 兼容的标记法. 这里的词性类别可能是名词、动词、形容词或其他。 下面的句子是一个词性标注的例子。 其中，v代表动词、n代表名词、c代表连词、d代表副词、wp代表标点符号。 
 
 ![中文词性标注](img/jieba-1.png)
@@ -268,7 +283,7 @@ import jieba.posseg as pseg
 # 默认模式
 seg_list = pseg.cut("今天哪里都没去，在家里睡了一天")
 for word, flag in seg_list:
-    print(word + " " + flag)
+    print("word:{0} \t flag: {1}".format(word , flag))
    
 """
 使用 jieba 默认模式的输出结果是：
@@ -297,16 +312,16 @@ paddle模式的词性对照表如下：
 
 ### 2.5 获取词语位置
 
-将分本分词后，返回每个词和该词在原文中的起始位置，例子如下：
+使用 `jieba.tokenize` 方法将文本分词后，返回每个词和该词在原文中的起始位置，例子如下：
+注意：输入参数只接受 unicode.
 
 ~~~python
 import jieba
 
 result = jieba.tokenize('今天哪里都没去，在家里睡了一天')
 for tk in result:
-    print("word:" + tk[0] +
-          " start:" + str(tk[1]) +
-          " end:" + str(tk[2]))
+    print("word: {0} \t start: {1} \t end: {2}".format( 
+          tk[0], str(tk[1]) , str(tk[2])))
     
 """
 word:华为技术有限公司 start:0 end:8
@@ -318,9 +333,8 @@ word:品牌 start:11 end:13
 # 使用 search 模式
 result = jieba.tokenize('华为技术有限公司的手机品牌', mode="search")
 for tk in result:
-    print("word:" + tk[0] +
-          " start:" + str(tk[1]) +
-          " end:" + str(tk[2]))
+    print("word:{0} \t start: {1} \t end: {2}".format(
+        tk[0], str(tk[1]), str(tk[2])))
 """
 输出：
 word:华为 start:0 end:2
@@ -365,6 +379,30 @@ print('\ '.join(seg_list))
 jieba在其github页面提供了一组性能测试数据：
 
 在 4 核 3.4GHz Linux 机器上，对*金庸全集*进行精确分词，获得了 1MB/s 的速度，是单进程版的 3.3 倍。
+
+注意：基于 python 自带的 multiprocessing 模块，目前暂不支持 Windows
+
+~~~python
+import sys
+import time
+sys.path.append("../../")
+import jieba
+
+jieba.enable_parallel()
+
+url = sys.argv[1]
+content = open(url,"rb").read()
+t1 = time.time()
+words = "/ ".join(jieba.cut(content))
+
+t2 = time.time()
+tm_cost = t2-t1
+
+log_f = open("1.log","wb")
+log_f.write(words.encode('utf-8'))
+
+print('speed %s bytes/second' % (len(content)/tm_cost))
+~~~
 
 ### 2.8 jieba的 Tokenize
 

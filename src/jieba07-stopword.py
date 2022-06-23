@@ -5,7 +5,7 @@ import jieba
  
  
 # jieba.load_userdict('userdict.txt')
-# 创建停用词list, encoding='utf-8'
+# 创建停用词list, open的 encoding='utf-8' 为缺省
 def stopwordslist(filepath):
     stopwords = [line.strip() for line in open(filepath, 'r').readlines()]
     return stopwords
@@ -37,5 +37,7 @@ data = dict(Counter(data))
  
 with open('./output/wordcount.txt', 'w') as fw:  # 读入存储wordcount的文件路径
     for k, v in data.items():
-        fw.write('%s,%d\n' % (k, v))
+        if len(k)>1: #此处根据需求进行修改
+            if not k.isdecimal(): # 自动过滤一个汉字, 数字和空白字符。
+                fw.write('%s,%d\n' % (k, v))
         
